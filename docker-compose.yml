@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: exam_prep_pg
+    environment:
+      POSTGRES_DB: exam_prep
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - exam_prep_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d exam_prep"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  exam_prep_data:
